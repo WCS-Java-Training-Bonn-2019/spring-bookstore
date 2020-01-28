@@ -1,0 +1,12 @@
+.jumbotron {
+	background-color: #f4511e; /* Orange */
+	color: #ffffff;
+	position: relative;
+	background: url(images/bookshop.jpg);
+	background-position: 0% 25%;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	overflow: hidden;
+	border-radius: 0 !Important;
+}
