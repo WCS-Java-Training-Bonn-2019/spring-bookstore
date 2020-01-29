@@ -5,7 +5,12 @@ import java.util.Objects;
 
 import javax.persistence.Embeddable;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Embeddable
+@Getter
+@Setter
 public class ReviewId implements Serializable {
 
 	private static final long serialVersionUID = -6486818684849492209L;
@@ -17,7 +22,6 @@ public class ReviewId implements Serializable {
 	}
 
 	public ReviewId(Long bookId, Long customerId) {
-		super();
 		this.bookId = bookId;
 		this.customerId = customerId;
 	}

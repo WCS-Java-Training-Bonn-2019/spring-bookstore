@@ -18,7 +18,12 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Setter
+@Getter
 public class Book {
 
 	@Id
@@ -43,53 +48,4 @@ public class Book {
 	@JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
 	@NotEmpty(message = "Es muss mindestens ein Autor ausgewählt werden.")
 	private List<Author> authors = new ArrayList<>();
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getIsbn13() {
-		return isbn13;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public int getAvailableStock() {
-		return availableStock;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setIsbn13(String isbn13) {
-		this.isbn13 = isbn13;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setAvailableStock(int availableStock) {
-		this.availableStock = availableStock;
-	}
-
-	public List<Author> getAuthors() {
-		return authors;
-	}
-
-	public void setAuthors(List<Author> authors) {
-		this.authors = authors;
-	}
-
-	public Publisher getPublisher() {
-		return publisher;
-	}
-
-	public void setPublisher(Publisher publisher) {
-		this.publisher = publisher;
-	}
-
 }

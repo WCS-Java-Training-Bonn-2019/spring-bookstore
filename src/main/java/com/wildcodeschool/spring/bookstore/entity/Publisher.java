@@ -11,7 +11,12 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 public class Publisher {
 
 	@Id
@@ -24,25 +29,4 @@ public class Publisher {
 
 	@OneToMany(mappedBy = "publisher")
 	private List<Book> books = new ArrayList<>();
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public List<Book> getBooks() {
-		return books;
-	}
-
 }
