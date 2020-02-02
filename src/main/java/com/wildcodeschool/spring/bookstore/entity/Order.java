@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,12 +25,15 @@ public class Order {
 
 	@ManyToOne
 	@JoinColumn
+	@NotNull	
 	private Book book;
 	
 	@ManyToOne
 	@JoinColumn
+	@NotNull	
 	private Customer customer;
 
+	@Min (1)
 	private Integer amount;
 
 }

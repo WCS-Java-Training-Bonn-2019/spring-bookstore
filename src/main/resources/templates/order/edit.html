@@ -10,18 +10,21 @@
     <input th:field="*{id}" type="hidden">
     <label for="amount">Amount</label>
     <input th:field="*{amount}" required type="text">
+    <span th:if="${#fields.hasErrors('*{amount}')}" th:errors="*{amount}">Amount error</span>
     <br><br>
     <label for="book">Book</label>
     <select th:field="*{book}">
 	  <option value="">Nicht ausgewählt</option>
 	  <option th:each="book : ${allBooks}" th:value="${book.id}" th:text="${book.title}"></option>	  
 	</select>
+    <span th:if="${#fields.hasErrors('*{book}')}" th:errors="*{book}">Book error</span>
 	<br><br>
 	<label for="customer">Customer</label>
     <select th:field="*{customer}">
 	  <option value="">Nicht ausgewählt</option>
 	  <option th:each="customer : ${allCustomers}" th:value="${customer.id}" th:text="${customer.firstName + ' ' + customer.lastName}"></option>	  
 	</select>
+    <span th:if="${#fields.hasErrors('*{customer}')}" th:errors="*{customer}">Customer error</span>
     <br><br> 
     <input type="submit" value="Save">
     <input type="reset" value="Reset" />
