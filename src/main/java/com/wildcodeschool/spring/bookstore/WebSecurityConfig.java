@@ -4,7 +4,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.wildcodeschool.spring.bookstore.service.UserDetailsServiceImpl;
 
@@ -31,17 +31,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(new PasswordEncoder() {
-			
-			@Override
-			public boolean matches(CharSequence rawPassword, String encodedPassword) {
-				return encode(rawPassword).equals(encodedPassword);
-			}
-			
-			@Override
-			public String encode(CharSequence rawPassword) {
-				return rawPassword.toString();
-			}
-		});
+		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+	}
+	
+	
+	public static void main(String[] args) {
+		String encoded = new BCryptPasswordEncoder().encode("password");
+		System.out.println(encoded);
 	}
 }
