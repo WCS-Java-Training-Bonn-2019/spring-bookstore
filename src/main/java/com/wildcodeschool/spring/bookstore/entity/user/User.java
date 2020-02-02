@@ -29,12 +29,13 @@ public class User implements UserDetails {
 	private Long id;
 	@Column(unique = true)
 	private String name;
-	@Column(unique = true)
 	private String password;
+	@Column(nullable = false)
+	private String role;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+		return singletonList(new SimpleGrantedAuthority("ROLE_" + role));
 	}
 
 	@Override

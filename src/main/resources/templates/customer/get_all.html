@@ -9,12 +9,14 @@
 <h1>Customer list</h1>
 <table border="1">
 <tr>
+    <th>User name</th>
     <th>First name</th>
     <th>Last name</th>
     <th>Address</th>
     <th>Actions</th>
 </tr>
 <tr th:each="customer : ${customers}">
+    <td th:text="${customer.name}">User</td> 
     <td th:text="${customer.firstName}">Martin</td>    
     <td th:text="${customer.lastName}">Schmidt</td>
     <td th:text="${customer.address}">Schützenstraße 19a, 53773 Hennef</td>

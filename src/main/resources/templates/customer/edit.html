@@ -8,6 +8,12 @@
 <h1>Customer details</h1>
 <form action="#" th:action="@{/customer/upsert}" th:object="${customer}" method="post">
     <input th:field="*{id}" type="hidden">
+    <label for="name">User name:</label>
+    <input th:field="*{name}" required type="text">
+    <br><br>
+    <label for="name">Password (encrypted)</label>
+    <input th:field="*{password}" required type="text">
+    <br><br>    
     <label for="firstName">First name:</label>
     <input th:field="*{firstName}" required type="text">
     <br><br>
