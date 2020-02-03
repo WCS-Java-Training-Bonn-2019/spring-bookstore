@@ -3,6 +3,7 @@ package com.wildcodeschool.spring.bookstore.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,12 @@ import com.wildcodeschool.spring.bookstore.repository.CustomerRepository;
 public class CustomerController {
 
 	private final CustomerRepository repository;
+	private final PasswordEncoder encoder;
 
 	@Autowired
-	public CustomerController(CustomerRepository repository) {
+	public CustomerController(CustomerRepository repository, PasswordEncoder encoder) {
 		this.repository = repository;
+		this.encoder = encoder;
 	}
 
 	@GetMapping("/customers")
@@ -31,6 +34,7 @@ public class CustomerController {
 
 	@PostMapping("/customer/upsert")
 	public String insert(@ModelAttribute Customer customer) {
+		customer.setPassword(encoder.encode(customer.getPassword()));
 		customer = repository.save(customer);
 		return "redirect:/customers";
 	}

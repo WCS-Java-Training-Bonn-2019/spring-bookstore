@@ -3,6 +3,7 @@ package com.wildcodeschool.spring.bookstore.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,6 @@ public class Publisher {
 	@Size(min = 5, message = "A publisher must have at least 5 characters")
 	private String name;
 
-	@OneToMany(mappedBy = "publisher")
+	@OneToMany(mappedBy = "publisher", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Book> books = new ArrayList<>();
 }

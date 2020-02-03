@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,18 +33,34 @@ public class Book {
 	private String isbn13;
 
 	@NotNull
-	@Size(min=2, max=255, message = "Die Länge des Titels muss zwischen 2 und 255 Zeichen liegen.")
+	@Size(min = 2, max = 255, message = "Die Länge des Titels muss zwischen 2 und 255 Zeichen liegen.")
 	private String title;
-	
+
 	private int availableStock;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@ManyToOne
 	@JoinColumn(name = "publisher_id")
 	@NotNull(message = "Es muss ein Publisher ausgewählt werden.")
 	private Publisher publisher;
 
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
 	@NotEmpty(message = "Es muss mindestens ein Autor ausgewählt werden.")
 	private List<Author> authors = new ArrayList<>();
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+		if (!publisher.getBooks().contains(this)) {
+			publisher.getBooks().add(this);
+		}
+	}
+	
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
+		for (Author author : authors) {
+			if (!author.getBooks().contains(this)) {
+				author.getBooks().add(this);
+			}			
+		}
+	}
 }

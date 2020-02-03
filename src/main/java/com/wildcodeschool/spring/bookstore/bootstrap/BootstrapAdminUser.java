@@ -4,12 +4,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.wildcodeschool.spring.bookstore.entity.user.User;
 import com.wildcodeschool.spring.bookstore.repository.user.UserRepository;
 
 @Component
+@Order(10)
 public class BootstrapAdminUser implements CommandLineRunner {
 
 	private final UserRepository userRepository;

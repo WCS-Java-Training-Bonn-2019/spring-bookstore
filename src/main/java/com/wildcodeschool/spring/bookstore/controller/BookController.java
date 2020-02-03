@@ -1,5 +1,6 @@
 package com.wildcodeschool.spring.bookstore.controller;
 
+import java.security.Principal;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -40,7 +41,10 @@ public class BookController {
 	}
 
 	@GetMapping("/books/search")
-	public String search(Model model, @RequestParam String searchString) {
+	public String search(Principal principal, Model model, @RequestParam String searchString) {
+		
+		System.out.println("HUHU:" + principal.getName());
+		
 		model.addAttribute("books",
 				repository.getByTitleContainingOrAuthorsLastNameContainingOrderByAvailableStockDesc(searchString, searchString));
 		return "book/get_all";
