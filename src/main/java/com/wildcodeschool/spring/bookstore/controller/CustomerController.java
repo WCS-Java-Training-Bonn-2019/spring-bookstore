@@ -18,12 +18,12 @@ import com.wildcodeschool.spring.bookstore.repository.CustomerRepository;
 public class CustomerController {
 
 	private final CustomerRepository repository;
-	private final PasswordEncoder encoder;
+	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public CustomerController(CustomerRepository repository, PasswordEncoder encoder) {
+	public CustomerController(CustomerRepository repository, PasswordEncoder passwordEncoder) {
 		this.repository = repository;
-		this.encoder = encoder;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@GetMapping("/customers")
@@ -34,7 +34,10 @@ public class CustomerController {
 
 	@PostMapping("/customer/upsert")
 	public String insert(@ModelAttribute Customer customer) {
-		customer.setPassword(encoder.encode(customer.getPassword()));
+		if ("admin".equals(customer.getUsername())) {
+			throw new IllegalArgumentException("admin not allowed here");
+		}
+		customer.setPassword(passwordEncoder.encode(customer.getPassword()));		
 		customer = repository.save(customer);
 		return "redirect:/customers";
 	}

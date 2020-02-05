@@ -4,43 +4,36 @@ import static java.util.Collections.singletonList;
 
 import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.Getter;
-import lombok.Setter;
+public class AdminUserDetails implements UserDetails {
 
-@Entity
-@Getter
-@Setter
-public class User implements UserDetails {
+	private static final long serialVersionUID = 7715834030133429161L;
 
-	private static final long serialVersionUID = -5744128654291011174L;
+	private final String userName;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	@Column(unique = true)
-	private String name;
-	private String password;
-	@Column(nullable = false)
-	private String role;
+	private final String password;
+
+	public AdminUserDetails(String userName, String password) {
+		this.userName = userName;
+		this.password = password;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return singletonList(new SimpleGrantedAuthority("ROLE_" + role));
+		return singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
 	}
 
 	@Override
 	public String getUsername() {
-		return name;
+		return userName;
 	}
 
 	@Override
@@ -62,4 +55,5 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+
 }
