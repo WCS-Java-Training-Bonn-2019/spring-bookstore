@@ -13,6 +13,7 @@
     <th>Title</th>
     <th>Number of authors</th>
     <th>Available stock</th>
+    <th>Cover</th>
     <th>Actions</th>
 </tr>
 <tr th:each="book : ${books}" th:object="${book}">
@@ -20,6 +21,7 @@
     <td th:text="*{title}">Clean Code</td>
     <td th:text="${#lists.size(book.authors)}">1</td>
     <td th:text="*{availableStock}">5</td>
+    <td><img th:src="@{'/image/' + *{id}}"/></td>
     <td>
         <a th:href="@{'/book/edit/' + *{id}}">Edit</a>
         <a th:href="@{'/book/delete/' + *{id}}">Delete</a>
