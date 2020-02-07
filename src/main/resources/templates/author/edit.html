@@ -1,21 +1,88 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
-    <title>Author details</title>
+  <meta charset="UTF-8">
+  <title>Author details</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script th:src="@{/webjars/jquery/3.4.1/jquery.slim.min.js}" src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}" src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>Author details</h1>
-<form action="#" th:action="@{/author/upsert}" th:object="${author}" method="post">
-    <input th:field="*{id}" type="hidden">
-    <label for="firstName">First name:</label>
-    <input th:field="*{firstName}" required type="text">
-    <br><br>
-    <label for="lastName">Last name:</label>
-    <input th:field="*{lastName}" required type="text">    
-    <br><br>    
-    <input type="submit" value="Save">
-    <input type="reset" value="Reset" />
-</form>
+
+<section>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">N3rdy b00ks</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#" th:href="@{/}">
+            Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Manage </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#" th:href="@{'/orders'}">Orders</a>
+            <a class="dropdown-item" href="#" th:href="@{'/reviews'}">Reviews</a>
+            <a class="dropdown-item" href="#" th:href="@{'/customers'}">Customers</a>
+            <a class="dropdown-item" href="#" th:href="@{'/books'}">Books</a>
+            <a class="dropdown-item" href="#" th:href="@{'/authors'}">Authors</a>
+            <a class="dropdown-item" href="#" th:href="@{'/publishers'}">Publishers</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <form action="#" th:action="@{'/books/search'}" class="form-inline my-2 my-lg-0">
+            <input name="searchString" class="form-control mr-sm-2" type="search" placeholder="Search books" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="nav-item">
+          <a class="nav-link" href="#" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
+          <a class="nav-link" href="#" th:href="@{/logout}" sec:authorize="isAuthenticated()"><span sec:authentication="name"></span> (logout)</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</section>
+
+<section>
+  <div class="jumbotron">
+    <h1>Author Details</h1>
+  </div>
+
+  <div class="container-fluid">
+    <form action="#" th:action="@{/author/upsert}" th:object="${author}" method="post">
+      <input th:field="*{id}" type="hidden">
+      
+      <div class="form-group row">
+        <label for="firstName" class="col-sm-2 col-form-label">First Name:</label>
+        <div class="col-sm-10">
+          <input th:field="*{firstName}" type="text" class="form-control" id="firstName" required>
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <label for="lastName" class="col-sm-2 col-form-label">Last Name:</label>
+        <div class="col-sm-10">
+          <input th:field="*{lastName}" type="text" class="form-control" id="lastName" required>
+        </div>
+      </div>
+      
+      <div class="pb-3">
+        <input type="submit" value="Save" class="btn btn-primary btn-sm">
+        <input type="reset" value="Reset" class="btn btn-danger btn-sm">
+        <a th:href="@{/authors/}" class="btn btn-secondary btn-sm" role="button">Back</a>
+      </div>
+    </form>
+  </div>
+</section>
+
 </body>
 </html>
