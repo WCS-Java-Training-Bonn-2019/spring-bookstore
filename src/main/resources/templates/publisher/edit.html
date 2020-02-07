@@ -1,32 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
-    <title>Publisher details</title>
+  <meta charset="UTF-8">
+  <title>Publisher Details</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-<h1>Publisher details</h1>
-<form action="#" th:action="@{/publisher/upsert}" th:object="${publisher}" method="post">
+
+<div class="jumbotron">
+  <h1>Publisher Details</h1>
+</div>
+
+<div class="container-fluid">
+  <form action="#" th:action="@{/publisher/upsert}" th:object="${publisher}" method="post">
     <input th:field="*{id}" type="hidden">
-    <label for="name">Name:</label>
-    <input th:field="*{name}" type="text">
-    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
-    <br><br>    
-    <input type="submit" value="Update">
-    <input type="reset" value="Reset" />    
-</form>
+    <div class="form-group row pl-3 pr-3">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Name</div>
+        </div>
+        <input th:field="*{name}" type="text" class="form-control" required>
+      </div>
+      <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+    </div>
+    <div class="pb-3">
+      <input type="submit" value="Update" class="btn btn-primary btn-sm">
+      <input type="reset" value="Reset" class="btn btn-danger btn-sm"/>
+    </div>
+  </form>
+</div>
+
 <section th:if="${not #lists.isEmpty(publisher.books)}">
-<h2>Published books</h2>
-<table border="1">
-<tr>
-    <th>ISBN13</th>
-    <th>Title</th>
-</tr>
-<tr th:each="book : ${publisher.books}" th:object="${book}">
-    <td th:text="*{isbn13}">978-13-235088-4</td>    
-    <td th:text="*{title}">Clean Code</td>
-</tr>
-</table>
+  <div class="jumbotron">
+    <h2>Published Books</h2>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">ISBN</th>
+        <th scope="col">Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr scope="row" th:each="book : ${publisher.books}" th:object="${book}">
+        <td th:text="*{isbn13}">978-13-235088-4</td>    
+        <td th:text="*{title}">Clean Code</td>
+      </tr>
+    </tbody>
+  </table>
 </section>
+
 </body>
 </html>

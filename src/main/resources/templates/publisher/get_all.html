@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
-    <title>Publisher list</title>
+  <meta charset="UTF-8">
+  <title>Publisher List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
+
 <section>
-<h1>Publisher list</h1>
-<table border="1">
-<tr>
-    <th>Name</th>
-    <th>Actions</th>
-</tr>
-<tr th:each="publisher : ${publishers}">
-    <td th:text="${publisher.name}">Prentice Hall</td>    
-    <td>
-        <a th:href="@{'/publisher/edit/' + ${publisher.id}}">Edit</a>
-        <a th:href="@{'/publisher/delete/' + ${publisher.id}}">Delete</a>
-    </td>
-</tr>
-</table>
+  <div class="jumbotron">
+	<h1>Publisher List</h1>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr scope="row" th:each="publisher : ${publishers}">
+        <td th:text="${publisher.name}"></td>    
+        <td>
+          <a th:href="@{'/publisher/edit/' + ${publisher.id}}" class="btn btn-primary btn-sm" role="button">Edit</a>
+          <a th:href="@{'/publisher/delete/' + ${publisher.id}}" class="btn btn-danger btn-sm" role="button">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <section>
-<br>
-<a th:href="@{'/publisher/new'}">Insert new</a><br>
-<a th:href="@{/}">Back</a>
+  <br>&nbsp;
+  <a th:href="@{'/publisher/new'}" class="btn btn-primary btn-sm" role="button">Insert New</a>
+  <a th:href="@{/}" class="btn btn-secondary btn-sm" role="button">Back</a>
 </section>
+
 </body>
 </html>
 
