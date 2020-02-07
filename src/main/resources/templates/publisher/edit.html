@@ -52,28 +52,30 @@
   </nav>
 </section>
 
-<div class="jumbotron">
-  <h1>Publisher Details</h1>
-</div>
+<section>
+  <div class="jumbotron">
+    <h1>Publisher Details</h1>
+  </div>
 
-<div class="container-fluid">
-  <form action="#" th:action="@{/publisher/upsert}" th:object="${publisher}" method="post">
-    <input th:field="*{id}" type="hidden">
-    <div class="form-group row pl-3 pr-3">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">Name</div>
+  <div class="container-fluid">
+    <form action="#" th:action="@{/publisher/upsert}" th:object="${publisher}" method="post">
+      <input th:field="*{id}" type="hidden">
+      <div class="form-group row pl-3 pr-3">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">Name</div>
+          </div>
+          <input th:field="*{name}" type="text" class="form-control" required>
         </div>
-        <input th:field="*{name}" type="text" class="form-control" required>
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
       </div>
-      <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
-    </div>
-    <div class="pb-3">
-      <input type="submit" value="Update" class="btn btn-primary btn-sm">
-      <input type="reset" value="Reset" class="btn btn-danger btn-sm"/>
-    </div>
-  </form>
-</div>
+      <div class="pb-3">
+        <input type="submit" value="Save" class="btn btn-primary btn-sm">
+        <input type="reset" value="Reset" class="btn btn-danger btn-sm"/>
+      </div>
+    </form>
+  </div>
+</section>
 
 <section th:if="${not #lists.isEmpty(publisher.books)}">
   <div class="jumbotron">
