@@ -1,89 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
 <head>
   <meta charset="UTF-8">
   <title>Author List</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script th:src="@{/webjars/jquery/3.4.1/jquery.slim.min.js}" src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}" src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script th:src="@{/webjars/jquery/3.4.1/jquery.slim.min.js}" src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}"
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
 </head>
+
 <body>
 
-<section>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">N3rdy b00ks</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#" th:href="@{/}">
-            Home
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Manage </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#" th:href="@{'/orders'}">Orders</a>
-            <a class="dropdown-item" href="#" th:href="@{'/reviews'}">Reviews</a>
-            <a class="dropdown-item" href="#" th:href="@{'/customers'}">Customers</a>
-            <a class="dropdown-item" href="#" th:href="@{'/books'}">Books</a>
-            <a class="dropdown-item" href="#" th:href="@{'/authors'}">Authors</a>
-            <a class="dropdown-item" href="#" th:href="@{'/publishers'}">Publishers</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <form action="#" th:action="@{'/books/search'}" class="form-inline my-2 my-lg-0">
-            <input name="searchString" class="form-control mr-sm-2" type="search" placeholder="Search books" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item">
-          <a class="nav-link" href="#" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
-          <a class="nav-link" href="#" th:href="@{/logout}" sec:authorize="isAuthenticated()"><span sec:authentication="name"></span> (logout)</a>
-        </li>
-      </ul>
+  <section>
+    <nav th:replace="fragments.html :: nav" />
+  </section>
+
+  <section>
+    <div class="jumbotron">
+      <h1>Author List</h1>
     </div>
-  </nav>
-</section>
 
-<section>
-  <div class="jumbotron">
-    <h1>Author List</h1>
-  </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr scope="row" th:each="author : ${authors}">
+          <td th:text="${author.firstName}">Robert C.</td>
+          <td th:text="${author.lastName}">Martin</td>
+          <td>
+            <a th:href="@{'/author/edit/' + ${author.id}}" class="btn btn-primary btn-sm" role="button">Edit</a>
+            <a th:href="@{'/author/delete/' + ${author.id}}" class="btn btn-danger btn-sm" role="button">Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr scope="row" th:each="author : ${authors}">
-        <td th:text="${author.firstName}">Robert C.</td>    
-        <td th:text="${author.lastName}">Martin</td>
-        <td>
-          <a th:href="@{'/author/edit/' + ${author.id}}" class="btn btn-primary btn-sm" role="button">Edit</a>
-          <a th:href="@{'/author/delete/' + ${author.id}}" class="btn btn-danger btn-sm" role="button">Delete</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<section>
-  <div class="pl-3 pr-3 pb-3">
-    <a th:href="@{'/author/new'}" class="btn btn-primary btn-sm" role="button">Insert New</a>
-    <a th:href="@{/}" class="btn btn-secondary btn-sm" role="button">Back</a>
-  </div>
-</section>
+  <section>
+    <div class="pl-3 pr-3 pb-3">
+      <a th:href="@{'/author/new'}" class="btn btn-primary btn-sm" role="button">Insert New</a>
+      <a th:href="@{/}" class="btn btn-secondary btn-sm" role="button">Back</a>
+    </div>
+  </section>
 
 </body>
+
 </html>
