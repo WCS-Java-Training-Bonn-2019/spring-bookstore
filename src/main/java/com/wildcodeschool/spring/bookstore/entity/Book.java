@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
@@ -43,24 +44,27 @@ public class Book {
 	@NotNull(message = "Es muss ein Publisher ausgewählt werden.")
 	private Publisher publisher;
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany
 	@JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
 	@NotEmpty(message = "Es muss mindestens ein Autor ausgewählt werden.")
 	private List<Author> authors = new ArrayList<>();
 
-	public void setPublisher(Publisher publisher) {
-		this.publisher = publisher;
-		if (publisher != null && !publisher.getBooks().contains(this)) {
-			publisher.getBooks().add(this);
-		}
-	}
-	
-	public void setAuthors(List<Author> authors) {
-		this.authors = authors;
-		for (Author author : authors) {
-			if (!author.getBooks().contains(this)) {
-				author.getBooks().add(this);
-			}			
-		}
-	}
+	@Lob
+	private byte[] image;
+
+//	public void setPublisher(Publisher publisher) {
+//		this.publisher = publisher;
+//		if (publisher != null && !publisher.getBooks().contains(this)) {
+//			publisher.getBooks().add(this);
+//		}
+//	}
+//	
+//	public void setAuthors(List<Author> authors) {
+//		this.authors = authors;
+//		for (Author author : authors) {
+//			if (!author.getBooks().contains(this)) {
+//				author.getBooks().add(this);
+//			}			
+//		}
+//	}
 }

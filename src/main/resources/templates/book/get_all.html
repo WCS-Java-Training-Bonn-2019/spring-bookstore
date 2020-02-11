@@ -47,7 +47,7 @@
           <td th:text="*{title}">Clean Code</td>
           <td th:text="${#lists.size(book.authors)}">1</td>
         <td th:text="*{availableStock}">5</td>
-        <td><img th:src="@{'/image/' + *{id}}"/></td>
+        <td><img th:src="@{'/book/' + *{id} + '/image'}"/></td>
         <td>
           <a th:href="@{'/book/edit/' + *{id}}" class="btn btn-primary btn-sm">Edit</a>
           <a th:href="@{'/book/delete/' + *{id}}" class="btn btn-danger btn-sm">Delete</a>
