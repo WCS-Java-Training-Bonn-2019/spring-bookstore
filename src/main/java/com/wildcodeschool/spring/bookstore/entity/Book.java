@@ -50,7 +50,7 @@ public class Book {
 
 	public void setPublisher(Publisher publisher) {
 		this.publisher = publisher;
-		if (!publisher.getBooks().contains(this)) {
+		if (publisher != null && !publisher.getBooks().contains(this)) {
 			publisher.getBooks().add(this);
 		}
 	}
