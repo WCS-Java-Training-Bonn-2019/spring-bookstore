@@ -18,6 +18,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.ISBN;
+import org.hibernate.validator.constraints.ISBN.Type;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +34,7 @@ public class Book {
 	private Long id;
 
 	@Column(nullable = false, name = "isbn13", insertable = true, updatable = true, unique = false)
+	@ISBN(type = Type.ISBN_13, message = "Ungültige ISBN, Beispiel: 978-0132350884")
 	private String isbn13;
 
 	@NotNull
