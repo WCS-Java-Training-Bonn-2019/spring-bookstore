@@ -37,16 +37,17 @@
         <div class="form-group row">
           <label for="isbn13" class="col-sm-2 col-form-label">ISBN13:</label>
           <div class="col-sm-10">
-            <input th:field="*{isbn13}" type="text" class="form-control" id="isbn13" required>
+            <input th:field="*{isbn13}" type="text" class="form-control" th:classappend="${#fields.hasErrors('*{isbn13}')}? 'is-invalid'" id="isbn13" placeholder="978-0132350884" required>
+            <div th:if="${#fields.hasErrors('*{isbn13}')}" class="invalid-feedback" th:errors="*{isbn13}">ISBN error</div>
           </div>
         </div>
 
         <div class="form-group row">
           <label for="title" class="col-sm-2 col-form-label">Title:</label>
           <div class="col-sm-10">
-            <input th:field="*{title}" type="text" class="form-control" id="title" required>
+            <input th:field="*{title}" type="text" class="form-control" th:classappend="${#fields.hasErrors('*{title}')}? 'is-invalid'" id="title" required>
+            <div th:if="${#fields.hasErrors('*{title}')}" class="invalid-feedback" th:errors="*{title}">Title error</div>
           </div>
-          <span th:if="${#fields.hasErrors('*{title}')}" th:errors="*{title}">Title error</span>
         </div>
 
         <div class="form-group row">
@@ -54,44 +55,43 @@
           <div class="col-sm-10">
             <input th:field="*{image}" type="file" class="form-control-file" id="image">
           </div>
-          <span th:if="${#fields.hasErrors('*{image}')}" th:errors="*{image}">Image error</span>
         </div>
       
-      <div class="form-group row">
-        <label for="availableStock" class="col-sm-2 col-form-label">Available Stock:</label>
-        <div class="col-sm-10">
-          <input th:field="*{availableStock}" type="text" class="form-control" id="availableStock" required>
+        <div class="form-group row">
+          <label for="availableStock" class="col-sm-2 col-form-label">Available Stock:</label>
+          <div class="col-sm-10">
+            <input th:field="*{availableStock}" type="text" class="form-control" id="availableStock" required>
+          </div>
         </div>
-      </div>
       
-      <div class="form-group row">
-        <label for="publisher" class="col-sm-2 col-form-label">Publisher:</label>
-        <div class="col-sm-10">
-          <select th:field="*{publisher}" class="form-control" id="publisher">
-	        <option value="volvo" th:remove="tag">Prentice Hall</option>
-	        <option value="saab" th:remove="tag">Schneider Publishing</option>
-	        <option value="">Nicht ausgewählt</option>
-	        <option th:each="publisher : ${allPublishers}" th:value="${publisher.id}" th:text="${publisher.name}"></option>	  
- 	      </select>
+        <div class="form-group row">
+          <label for="publisher" class="col-sm-2 col-form-label">Publisher:</label>
+          <div class="col-sm-10">
+            <select th:field="*{publisher}" class="form-control" th:classappend="${#fields.hasErrors('*{publisher}')}? 'is-invalid'" id="publisher">
+              <option value="volvo" th:remove="tag">Prentice Hall</option>
+              <option value="saab" th:remove="tag">Schneider Publishing</option>
+              <option value="">Nicht ausgewählt</option>
+              <option th:each="publisher : ${allPublishers}" th:value="${publisher.id}" th:text="${publisher.name}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('*{publisher}')}" class="invalid-feedback" th:errors="*{publisher}">Publisher error</div>
+          </div>
         </div>
-	    <span th:if="${#fields.hasErrors('*{publisher}')}" th:errors="*{publisher}">Title error</span>
-      </div>
-      
-	  <label for="authors">Authors</label>
-      <section id="authors">
-        <section th:remove="all">
-	      <input type="checkbox" id="author_1" name="author" value="1">
-	      <label for="author_1">Robert C. Martin</label>
-	      <br>
-        </section>
-        <section th:each="author : ${allAuthors}">
-	      <input type="checkbox" th:field="*{authors}" th:value="${author.id}" />
-	      <label th:for="${#ids.prev('authors')}" th:text="${author.firstName + ' ' + author.lastName}"></label>
-	      <br>
-        </section>
-	  </section>
-	  <span th:if="${#fields.hasErrors('*{authors}')}" th:errors="*{authors}">Title error</span>
 
+        <label for="authors">Authors</label>
+        <section id="authors">
+          <section th:remove="all">
+          <input type="checkbox" id="author_1" name="author" value="1">
+          <label for="author_1">Robert C. Martin</label>
+          <br>
+          </section>
+          <section th:each="author : ${allAuthors}">
+          <input type="checkbox" th:field="*{authors}" th:value="${author.id}" />
+          <label th:for="${#ids.prev('authors')}" th:text="${author.firstName + ' ' + author.lastName}"></label>
+          <br>
+          </section>
+      </section>
+      <span th:if="${#fields.hasErrors('*{authors}')}" th:errors="*{authors}">Title error</span>
+  
       <div class="pb-3">
         <input type="submit" value="Save" class="btn btn-primary btn-sm">
         <input type="reset" value="Reset" class="btn btn-danger btn-sm">
