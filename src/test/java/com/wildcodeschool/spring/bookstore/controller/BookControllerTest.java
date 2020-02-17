@@ -110,7 +110,7 @@ class BookControllerTest {
 		Book book = new Book();
 		book.setAvailableStock(1);
 		book.setTitle(title);
-		book.setIsbn13("1234567890123");
+		book.setIsbn13("978-0132350884");
 		
 		Author author = new Author();
 		author.setFirstName("John");
