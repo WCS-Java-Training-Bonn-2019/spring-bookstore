@@ -1,9 +1,9 @@
 package com.wildcodeschool.spring.bookstore.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,8 +45,8 @@ class CarControllerTest {
 		// When | Act
 		MvcResult result = mock.perform(MockMvcRequestBuilders.get("/cars")).andReturn();
 		// Then | Assert
-		List<Car> books = getCarsFromModel(result);
-		assertThat(books).hasSize(0);
+		List<Car> cars = getCarsFromModel(result);
+		assertThat(cars).hasSize(0);
 	}
 
 	@Test
@@ -68,6 +68,7 @@ class CarControllerTest {
 		// When | Act
 		MvcResult result = mock.perform(MockMvcRequestBuilders.get("/cars")).andReturn();
 		// Then | Assert
+		assertThat(result.getResponse().getStatus()).isEqualTo(200);
 		List<Car> books = getCarsFromModel(result);
 		assertThat(books).hasSize(2);
 	}
@@ -90,17 +91,30 @@ class CarControllerTest {
 	@Test
 	void shouldBeAbleToModifyACar() throws Exception {
 		// Given | Arrange
+		Car existingCar = givenACarInTheDatabase("Tesla Model 3");
+		Car modifiedCar = new Car();
+		modifiedCar.setId(existingCar.getId());
+		modifiedCar.setModel("Tesla Model 4");
 		// When
+		MvcResult result = mock.perform(MockMvcRequestBuilders.post("/car/upsert")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED).flashAttr("car", modifiedCar)).andReturn();
 		// Then
-		fail();
+		assertThat(result.getResponse().getStatus()).isEqualTo(302);
+		Optional<Car> resultCar = carRepo.findById(existingCar.getId());
+		assertThat(resultCar).isPresent();
+		assertThat(resultCar.get().getModel()).isEqualTo("Tesla Model 4");
 	}
 
 	@Test
 	void shouldBeAbleToDeleteACar() throws Exception {
 		// Given | Arrange
+		Car existingCar = givenACarInTheDatabase("Tesla Model 3");
 		// When
+		MvcResult result = mock.perform(MockMvcRequestBuilders.get("/car/" + existingCar.getId() + "/delete")).andReturn();
 		// Then
-		fail();
+		assertThat(result.getResponse().getStatus()).isEqualTo(302);
+		Optional<Car> resultCar = carRepo.findById(existingCar.getId());
+		assertThat(resultCar).isEmpty();
 	}
 
 	private List<Car> getCarsFromModel(MvcResult result) {
