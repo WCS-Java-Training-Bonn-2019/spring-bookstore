@@ -64,21 +64,9 @@ public class BookController {
 	@GetMapping("/books/search")
 	public String search(Principal principal, Model model, @RequestParam String searchString) {
 		
-		boolean isAdmin = preCheckPrincialsRoles(principal);
-		boolean isEmpty = checkIfSearchStringIsEmpts(searchString);
-
-		if(isAdmin) {
-			if(!isEmpty) {	
 			model.addAttribute("books", repository
 					.getByTitleContainingOrAuthorsLastNameContainingOrderByAvailableStockDesc(searchString, searchString));
-			}else {
-				model.addAttribute("books", repository
-						.findAll());
-			}
 			return "book/get_all";
-		}else {
-			throw new IllegalStateException("User muss admin sein");
-		}
 	}
 
 	private boolean preCheckPrincialsRoles(Principal principal) {
