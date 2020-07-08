@@ -63,6 +63,7 @@ public class BookController {
 	@GetMapping("/books/search")
 	public String search(Principal principal, Model model, @RequestParam String searchString) {
 		
+		// ICH BIN DER COMMIT AUS DEM MASTER!
 		boolean isAdmin = preCheckPrincialsRoles(principal);
 
 		if(isAdmin) {
@@ -72,6 +73,7 @@ public class BookController {
 		}else {
 			throw new IllegalStateException("User muss admin sein");
 		}
+		// ICH BIN DER COMMIT AUS DEM MASTER!
 	}
 
 	private boolean preCheckPrincialsRoles(Principal principal) {
