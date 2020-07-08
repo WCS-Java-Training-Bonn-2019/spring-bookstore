@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -63,22 +64,29 @@ public class BookController {
 	@GetMapping("/books/search")
 	public String search(Principal principal, Model model, @RequestParam String searchString) {
 		
-		// ICH BIN DER COMMIT AUS DEM MASTER!
 		boolean isAdmin = preCheckPrincialsRoles(principal);
+		boolean isEmpty = checkIfSearchStringIsEmpts(searchString);
 
 		if(isAdmin) {
+			if(!isEmpty) {	
 			model.addAttribute("books", repository
 					.getByTitleContainingOrAuthorsLastNameContainingOrderByAvailableStockDesc(searchString, searchString));
+			}else {
+				model.addAttribute("books", repository
+						.findAll());
+			}
 			return "book/get_all";
 		}else {
 			throw new IllegalStateException("User muss admin sein");
 		}
-		// ICH BIN DER COMMIT AUS DEM MASTER!
 	}
 
 	private boolean preCheckPrincialsRoles(Principal principal) {
 		return principal.getName().equals("admin");
-		
+	}
+	
+	private boolean checkIfSearchStringIsEmpts(String searchString) {
+		return StringUtils.isEmpty(searchString);
 	}
 
 	@PostMapping("/book/upsert")
@@ -87,7 +95,7 @@ public class BookController {
 			model.addAttribute("allPublishers", publisherRepository.findAll());
 			model.addAttribute("allAuthors", authorRepository.findAll());
 			return "book/edit";
-		}			
+		}
 		book = repository.save(book);
 		return "redirect:/books";
 	}
