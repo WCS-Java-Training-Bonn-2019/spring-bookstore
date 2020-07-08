@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -63,9 +64,19 @@ public class BookController {
 	@GetMapping("/books/search")
 	public String search(Principal principal, Model model, @RequestParam String searchString) {
 
-		model.addAttribute("books", repository
-				.getByTitleContainingOrAuthorsLastNameContainingOrderByAvailableStockDesc(searchString, searchString));
+		boolean isEmpty = checkIfSearchStringIsEmpts(searchString);
+		if(!isEmpty) {
+			model.addAttribute("books", repository
+					.getByTitleContainingOrAuthorsLastNameContainingOrderByAvailableStockDesc(searchString, searchString));
+		}else {
+			model.addAttribute("books", repository
+					.findAll());
+		}
 		return "book/get_all";
+	}
+
+	private boolean checkIfSearchStringIsEmpts(String searchString) {
+		return StringUtils.isEmpty(searchString);
 	}
 
 	@PostMapping("/book/upsert")
