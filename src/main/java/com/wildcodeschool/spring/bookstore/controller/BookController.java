@@ -69,14 +69,6 @@ public class BookController {
 			return "book/get_all";
 	}
 
-	private boolean preCheckPrincialsRoles(Principal principal) {
-		return principal.getName().equals("admin");
-	}
-	
-	private boolean checkIfSearchStringIsEmpts(String searchString) {
-		return StringUtils.isEmpty(searchString);
-	}
-
 	@PostMapping("/book/upsert")
 	public String insert(@Valid Book book, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
