@@ -63,8 +63,6 @@ public class BookController {
 	@GetMapping("/books/search")
 	public String search(Principal principal, Model model, @RequestParam String searchString) {
 
-		System.out.println("HUHU:" + principal.getName());
-
 		model.addAttribute("books", repository
 				.getByTitleContainingOrAuthorsLastNameContainingOrderByAvailableStockDesc(searchString, searchString));
 		return "book/get_all";
