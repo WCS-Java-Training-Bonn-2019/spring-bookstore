@@ -63,18 +63,28 @@ public class BookController {
 
 	@GetMapping("/books/search")
 	public String search(Principal principal, Model model, @RequestParam String searchString) {
-
+		
+		boolean isAdmin = preCheckPrincialsRoles(principal);
 		boolean isEmpty = checkIfSearchStringIsEmpts(searchString);
-		if(!isEmpty) {
+
+		if(isAdmin) {
+			if(!isEmpty) {	
 			model.addAttribute("books", repository
 					.getByTitleContainingOrAuthorsLastNameContainingOrderByAvailableStockDesc(searchString, searchString));
+			}else {
+				model.addAttribute("books", repository
+						.findAll());
+			}
+			return "book/get_all";
 		}else {
-			model.addAttribute("books", repository
-					.findAll());
+			throw new IllegalStateException("User muss admin sein");
 		}
-		return "book/get_all";
 	}
 
+	private boolean preCheckPrincialsRoles(Principal principal) {
+		return principal.getName().equals("admin");
+	}
+	
 	private boolean checkIfSearchStringIsEmpts(String searchString) {
 		return StringUtils.isEmpty(searchString);
 	}
@@ -85,7 +95,7 @@ public class BookController {
 			model.addAttribute("allPublishers", publisherRepository.findAll());
 			model.addAttribute("allAuthors", authorRepository.findAll());
 			return "book/edit";
-		}			
+		}
 		book = repository.save(book);
 		return "redirect:/books";
 	}
