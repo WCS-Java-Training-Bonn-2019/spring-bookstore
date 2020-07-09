@@ -1,0 +1,28 @@
+image: maven:latest
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+stages:
+ - code-bauen
+ - testen
+
+paralleler-schritt: 
+  stage: code-bauen
+  script: 
+    - echo "ich mach etwas"
+
+build:
+  stage: code-bauen
+  script:
+    - mvn compile
+
+test:
+  stage: testen
+  script:
+    - mvn test

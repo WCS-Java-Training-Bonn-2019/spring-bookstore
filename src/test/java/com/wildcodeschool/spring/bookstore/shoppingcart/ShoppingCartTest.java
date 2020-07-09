@@ -31,7 +31,7 @@ class ShoppingCartTest {
 		underTest.addBook(new BookWithPrice("Weltatlas", "M. Autor", 10));
 		underTest.addBook(new BookWithPrice("Geschichtbuch", "Anderen Autor", 12));
 		
-		double price = underTest.getPrice();
+		double price = underTest.calculatePrice();
 		
 		assertThat(price).isEqualTo(22);
 	}
