@@ -23,7 +23,7 @@ public class ShoppingCart {
 			this.price += bookWithPrice.getPrice();
 		}
 		if(books.size() >= 3) {
-			this.price = this.price * 0.95;
+			this.price = this.price * 0.90;
 		}
 		return price;
 	}
