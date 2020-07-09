@@ -9,8 +9,14 @@ cache:
     - target/
 
 stages:
+ - validate
  - code-bauen
  - testen
+ 
+allgemeine-pruefung:
+  stage: validate
+  script: 
+    - mvn clean validate
 
 paralleler-schritt: 
   stage: code-bauen
